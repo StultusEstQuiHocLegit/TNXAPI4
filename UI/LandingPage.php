@@ -421,7 +421,7 @@ h3 {
     <div class="security-list">
         <div>Basically the same advantages as above, but now even better   XD.</div>
         <div class="code-link">
-            <a href="https://github.com/StultusEstQuiHocLegit/TNXAPI2" target="_blank" rel="noopener noreferrer">⚙️ SEE OUR CODE</a>
+            <a href="https://github.com/StultusEstQuiHocLegit/TNXAPI4" target="_blank" rel="noopener noreferrer">⚙️ SEE OUR CODE</a>
         </div>
     </div>
 
