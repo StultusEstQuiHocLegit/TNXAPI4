@@ -97,6 +97,7 @@ and
 2.) have automatically recurring calls to nexus.php directly (direct code execution)
 (for example to know, who is late with their payments)
 
+- improve SUPPORT BOT
 - upgrade to more powerful models again
 - improve SetupDatabases.php
 - ? add formbuilder and forms
