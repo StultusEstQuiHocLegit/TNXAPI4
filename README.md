@@ -90,7 +90,7 @@ to join the onboarding list, email to: hi@tnxapi.com
 
 
 <br><br><br><br><br><br><br><br><br><br>
-## 💡 FUTURE IDEAS
+## 💡 FUTURE IDEAS AND GENERAL NOTES
 ADD SOMETHING TO:
 1.) have automatically recurring calls to the AI
 and
