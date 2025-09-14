@@ -79,6 +79,10 @@ As you can see   XD, bringing basically the same advantages as above, but now ev
 ## 🧪 TESTING SETUP
 For local testing you must fill in the placeholders in `config.php` with your own credentials. Replace every `PLACEHOLDER_*` value with a real database server, name, user, password and API key before running the code.
 
+## 🔗 LINKS AND CONTACT
+landing page: www.tnxapi.com/UI/LandingPage.php
+to join the onboarding list, email to: hi@tnxapi.com
+
 ## 💡 FUTURE IDEAS
 ADD SOMETHING TO:
 1.) have automatically recurring calls to the AI
