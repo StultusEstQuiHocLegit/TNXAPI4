@@ -1,0 +1,92 @@
+<style>
+
+/* Link colors */
+a { color: #bbbb00; }
+a:link { color: #bbbb00; }
+a:visited { color: #bbbb00; }
+a:hover { color: #757500; }
+
+a.sublogo {
+    color: #000000; /* Inverted from white */
+}
+
+/* Body background and text color */
+body {
+  background: #ededed; /* Light gray, inverted from #121212 */
+  color: #363636; /* Dark gray, inverted from #c9c9c9 */
+}
+
+/* Dropdown menu background */
+#dropdownMenu {
+    background-color: #ffffff; /* White, inverted from black */
+}
+
+/* Vertical line color */
+.vertical-line {
+    border-left: 1px solid #363636; /* Dark gray, inverted from light gray */
+}
+
+/* Code block border color */
+.code {
+    border: 1px solid #000000; /* Black, inverted from white */
+}
+
+/* Button colors */
+.button {
+    background-color: #ffffff; /* Inverted from black */
+    color: #ffffff;
+}
+.button:hover {
+    background-color: #e5e5e5; /* Light gray, inverted from #080808 */
+}
+
+.mainbutton {
+    background-color: #ffffff;
+    color: #ffffff;
+    border: 1px solid #000000;
+}
+.mainbutton:hover {
+    background-color: #e5e5e5;
+}
+
+/* Table border color */
+td, table {
+  border-color: #cfcfcf; /* Light gray, inverted from dark gray */
+}
+
+/* Cookie container background and border color */
+#cookie-container {
+    background-color: #ffffff; /* Inverted from black */
+    border: 1px solid #e9e9e9; /* Light gray, inverted from darker gray */
+}
+
+#close-cookie {
+    color: #000000; /* Inverted from white */
+}
+
+/* Input fields and textareas */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="time"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="search"],
+textarea,
+select {
+    background-color: #ffffff; /* Inverted from black */
+    color: #363636; /* Dark gray, inverted from light gray */
+    border: 0px solid #363636;
+}
+
+input[type="text"]::placeholder {
+    /* color: #363636; */
+}
+
+/* Checkbox accent color */
+input[type="checkbox"] {
+    accent-color: #363636;
+}
+
+</style>

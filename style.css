@@ -1,0 +1,557 @@
+<style>
+
+/* IMPORTANT: the font is overwritten again in the header.php file, because it doesn't work here like this */
+/*
+@font-face {
+    font-family: 'OCR A Std';
+    font-style: normal;
+    font-weight: normal;
+    src: local('OCR A Std'), url('OCRAStd.woff') format('woff');
+}
+*/
+
+/*
+a { color: #ffff00; }
+a:link { text-decoration:none; color: #ffff00; font-weight: bold;}
+a:visited { color: #ffff00; text-decoration:none;}
+a:hover { text-decoration:none; color: #f5901a;}
+a:active { text-decoration:none; text-decoration:none;}
+a:focus { text-decoration:blink; text-decoration:none;}
+*/
+a { color: #a5a500; }
+a:link { text-decoration:none; color: #a5a500; font-weight: bold;}
+a:visited { color: #a5a500; text-decoration:none;}
+a:hover { text-decoration:none; color: #ffff00;}
+a:active { text-decoration:none; text-decoration:none;}
+a:focus { text-decoration:blink; text-decoration:none;}
+
+a.sublogo {
+    color: white;
+    font-size: 18px;
+    display: inline-block;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+{
+margin: 0px;
+cursor: auto;
+/*text-align: justify;*/
+overflow: auto;
+clip: rect(auto, auto, auto, auto);
+list-style-type: upper-roman;
+list-style-position: inside;
+}
+
+body {
+  background: #121212;
+  color: #c9c9c9;
+  /*background: #000000;
+  color: #ffffff;*/
+  font-variant: normal;
+  font-style: normal;
+  font-size: 14px;
+  cursor: auto;
+  /*text-align: justify;*/
+  overflow: auto;
+  /*font-family: Consolas, Monaco, 'Courier New', monospace;*/
+  /* font-family: 'OCR A Std', monospace; */ /* IMPORTANT: the font is overwritten again in the header.php file, because it doesn't work here like this */
+}
+
+.header {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    text-align: left;
+    padding: 2px;
+    z-index: 9999;
+}
+
+/* Top-left corner glow */
+#glowEffect {
+    position: fixed;
+    top: 7px;
+    left: 7px;
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 0 15px 5px rgba(255, 255, 0, 0.6);
+    animation: none; /* Start with no animation */
+}
+
+/* Keyframes for pulsing glow effect */
+@keyframes glow {
+    0% {
+        opacity: 0; /* Start invisible */
+        box-shadow: 0 0 5px 2px rgba(255, 255, 0, 0.3);
+    }
+    30% {
+        opacity: 1; /* Fully visible */
+        box-shadow: 0 0 20px 10px rgba(255, 255, 0, 1);
+    }
+    100% {
+        opacity: 0; /* Fade out */
+        box-shadow: 0 0 5px 2px rgba(255, 255, 0, 0);
+    }
+}
+
+#menuIcon {
+}
+
+/* dropdown menu */
+#dropdownMenuLogo {
+    z-index: 9999;
+}
+
+#dropdownMenu {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    min-width: 170px;
+    z-index: 9999;
+
+    /* for scrolling */
+    /* max-height: 500px; */
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.topright {
+    position: fixed;
+    top: 5;
+    right: 5px;
+    text-align: right;
+    padding: 2px;
+}
+
+.footerleft {
+    position: fixed;
+    bottom: 0;
+    left: 5px;
+    padding: 2px;
+    text-align: left;
+}
+
+.footerright {
+    position: fixed;
+    bottom: 0;
+    right: 5px;
+    padding: 2px;
+    text-align: right;
+}
+
+.content {
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+
+.content {
+    left: 5%;
+    right: 5%;
+    transform: none;
+}
+
+td, table {
+    border-collapse: separate;
+    padding: 2;
+    margin: 2;
+    border-spacing: 10px;
+    border-width: 0px;
+    border-color: #303030;
+    border-style: solid;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.vertical-line {
+    border-left: 1px solid #c9c9c9;
+    height: 48px;
+    margin: 0 15px;
+}
+
+h1 {
+    font-size: 45px;
+}
+
+p {
+    font-size: 26px;
+    margin-bottom: 30px;
+}
+
+.code {
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+    border: 1px solid #ffffff;
+    text-align: left;
+    padding: 5px;
+    /*font-family: Consolas, Monaco, 'Courier New', monospace;*/
+    font-family: 'OCR A Std', monospace; /* IMPORTANT: the font is overwritten again in the header.php file, because it doesn't work here like this */
+    white-space: pre-wrap;
+}
+
+.viewer {
+  width: 100%;
+  height: 500px;
+  margin: auto;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #000000;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 0px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #080808;
+}
+
+.mainbutton {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #000000;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 0px;
+    transition: background-color 0.3s;
+    border: 1px solid #ffffff;
+}
+
+.mainbutton:hover {
+    background-color: #080808;
+}
+
+.steps {
+    text-align: left;
+}
+
+hr { 
+    width: 90%; 
+    height: 0.5px; 
+    margin: 0 auto;
+}
+
+
+
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
+    justify-content: center; /* Center the grid itself */
+    justify-items: center; /* Center the items within the grid */
+    padding: 20px;
+}
+
+.app-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.app-icon {
+    font-size: 50px;
+    margin-bottom: 5px;
+}
+
+
+
+/* make the .image span fill the card’s content width and stay square */
+.BigItems-card .image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+  
+/* have the img fill that square and crop */
+.BigItems-card .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* no more fixed 200×200 */
+}
+
+.BigItems-card .description {
+    text-align: justify;   /* full justification */
+    /* optional: make German hyphenation work */
+    hyphens: auto;
+    /* tweak last line alignment if you like: */
+    /* text-align-last: left; */
+    opacity: 0.5;
+}
+
+.BigItems-card .card-footer {
+    display: flex;
+    flex-wrap: wrap;          /* ← allow wrapping */
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+/* make sure neither the price nor the .card-button forcibly shrink or grow too much */
+.BigItems-card .card-footer .price,
+.BigItems-card .card-footer .card-button {
+    flex: 0 1 auto;
+    /* min-width: max-content;  ← optional, prevents them from ever shrinking below their content width */
+}
+
+.BigItems-card .card-footer .card-button {
+    margin-left: auto;
+    text-align: right;
+}
+
+.BigItems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    row-gap: 40px;     /* vertical */
+    column-gap: 20px;  /* horizontal */
+}
+  
+.BigItems-card {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+  
+.BigItems-card.highlight {
+    border: 1px solid #505050;
+}
+
+
+
+
+
+/* the drop‐area label (so click anywhere opens the file dialog) */
+#drop-area {
+  border: 2px dashed;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+
+/* hide the input completely */
+#drop-area input[type="file"] {
+  display: none !important;
+}
+
+/* preview container layout */
+#preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+/* each thumbnail wrapper */
+.preview-item {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+}
+
+/* force the img to fill the box */
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* the remove “×” button */
+.preview-item .remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 1;
+  background: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 0%;
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+#cookie-container {
+    display: none;
+    position: fixed;
+    top: 2px;
+    right: 2px;
+    background-color: #000000;
+    padding: 2px;
+    border: 1px solid #161616;
+    z-index: 5000;
+}
+
+#cookie-content {
+    display: flex;
+    align-items: center;
+}
+
+#cookie-sentences {
+    font-size: 12px;
+}
+
+#close-cookie {
+    margin-left: 2px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+/* General style for all text-like input fields and textareas */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="time"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="search"],
+textarea,
+select {
+    background-color: #000000;  /* Black background */
+    color: #c9c9c9;  /* Light gray font color */
+    border: 0px solid #c9c9c9;  /* Optional: Light gray border */
+    padding: 10px;  /* Optional: Add padding for better text positioning */
+    /* font-size: 14px; */  /* Optional: Set a default font size */
+    width: 100%;  /* Make the input fields, textareas, and selects span the entire width */
+    box-sizing: border-box;  /* Ensure padding and border are included in the element's width */
+    appearance: none;  /* Remove default browser styling on the dropdown arrow */
+    font-family: 'OCR A Std', monospace; /* Use the OCR A font */
+    font-size: 14px;
+}
+
+input[type="text"]::placeholder {
+    /* color: #c9c9c9; */  /* Style for the placeholder text */
+}
+
+/* Checkbox styles */
+input[type="checkbox"] {
+    accent-color: #c9c9c9;  /* Change the checkbox color */
+    width: 30px;            /* Optional: adjust width */
+    height: 30px;           /* Optional: adjust height */
+    margin: 0px;            /* Optional: adjust spacing around the checkbox */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* improve view on smaller screens */
+/* 320px -> smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+/* 480px -> smartphones, Android phones, landscape iPhone */
+/* 600px -> portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+/* 801px -> tablet, landscape iPad, lo-res laptops ands desktops */
+/* 1025px -> big landscape tablets, laptops, and desktops */
+/* 1281px -> hi-res laptops and desktops */
+
+@media (max-width: 1025px) { 
+    .content {
+        left: 2.5%;
+        right: 2.5%;
+        transform: none;
+        font-size: 16px;        /* increase font size */
+    }
+
+    td, table {
+        font-size: 16px;
+    }
+
+    #menuIcon {
+        height: 120px; /* increasing the size */
+    }
+
+    .app-icon {
+        font-size: 80px;
+    }
+
+    /* General style for all text-like input fields and textareas */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="time"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="search"],
+    textarea,
+    select {
+        font-size: 16px;
+    }
+
+    #dropdownMenu {
+        /* display: none; */ 
+        /* position: fixed; */          /* Fixed positioning to cover the whole screen */
+        /* top: 0; */ 
+        /* left: 0; */ 
+        /* width: 100%; */             /* Full viewport width */
+        /* height: 100%; */            /* Full viewport height */
+        /* max-height: 100%; */        /* Ensure it doesn’t scroll beyond the screen */
+        /* overflow-y: auto; */        /* Enable scrolling if content overflows */
+        /* font-size: 30px; */        /* increase font size */
+    }
+}
+
+</style>
