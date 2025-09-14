@@ -83,6 +83,13 @@ For local testing you must fill in the placeholders in `config.php` with your ow
 landing page: www.tnxapi.com/UI/LandingPage.php
 to join the onboarding list, email to: hi@tnxapi.com
 
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br>
 ## 💡 FUTURE IDEAS
 ADD SOMETHING TO:
 1.) have automatically recurring calls to the AI
