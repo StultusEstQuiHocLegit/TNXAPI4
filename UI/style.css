@@ -1,0 +1,457 @@
+:root {
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --text-color: #333;
+    --bg-color: #fff;
+    --input-bg: #f5f5f5;
+    --border-color: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --link-color: #007bff;
+    --accent-color: #9b59b6;
+    --DirectEdit-color: #c0392b;
+    --smallaction-color: #ff8c00;
+}
+
+[data-theme="dark"] {
+    --primary-color: #40a9ff;
+    --primary-hover: #1890ff;
+    --text-color: #e0e0e0;
+    --bg-color: #1a1a1a;
+    --input-bg: #2d2d2d;
+    --border-color: #404040;
+    --shadow-color: rgba(0, 0, 0, 0.7);
+    --link-color: #40a9ff;
+    --accent-color: #bb86fc;
+    --DirectEdit-color: #f7cac9;
+    --smallaction-color: #ffa733;
+}
+
+.DirectEdit {
+    color: var(--DirectEdit-color);
+}
+
+.DirectEdit:focus {
+    outline: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding: 0.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+nav {
+    position: relative;
+}
+
+.menu-logo {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity 0.3s;
+    pointer-events: auto;
+}
+
+.menu-logo:hover {
+    opacity: 0.8;
+}
+
+#menuIcon {
+    height: 40px;
+    width: auto;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Center login container */
+.container:has(form) {
+    max-width: 400px;
+    width: 100%;
+    background-color: var(--bg-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    overflow-x: auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="time"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="search"],
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s;
+    font-size: 1rem;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="time"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: var(--bg-color);
+}
+
+/* dropdowns styled like text inputs */
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s, background-color 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+/* focus state */
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: var(--bg-color);
+}
+
+/* ensure options inherit your theme */
+option {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    width: 100%;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+    opacity: 1;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+}
+
+.alert-success {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.alert-error {
+    background-color: rgba(244, 67, 54, 0.1);
+    border: 1px solid #f44336;
+    color: #f44336;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-3 {
+    margin-top: 1.5rem;
+}
+
+/* Links styling */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+a:hover {
+    opacity: 0.8;
+}
+
+/* Dashboard styles */
+.dashboard-section {
+    margin-top: 2rem;
+}
+
+.info-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.info-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item strong {
+    min-width: 200px;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s;
+    text-align: center;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: var(--primary-hover);
+    opacity: 1;
+}
+
+@media (min-width: 769px) {
+    button:not(.control-button),
+    .button {
+        width: 300px;
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .button-group {
+        justify-content: center;
+    }
+
+    body.index-page button:not(.control-button),
+    body.index-page .button {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    word-wrap: break-word;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    #menuIcon {
+        height: 50px;
+    }
+
+    .menu-logo {
+        top: 0px;
+        left: 0px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 12px;
+    }
+
+    #menuIcon {
+        height: 60px;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .menu-logo {
+        top: 0px;
+        left: 0px;
+    }
+}
+
+.menu-spacer {
+    width: 100%;
+    height: 2rem;
+}
+
+.menu-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+    margin-top: 2rem;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    background-color: var(--input-bg);
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+    width: 100%;
+    max-width: 120px;
+    height: 120px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.menu-item:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.menu-title {
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin-top: 0.1rem;
+    word-break: break-word;
+    hyphens: auto;
+    text-align: center;
+    max-width: 100%;
+}
+
+/* Base styling for all checkboxes */
+input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  cursor: pointer;
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* When any checkbox is checked */
+input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Checkmark symbol for any checked checkbox */
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 1rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Focus state for any checkbox */
+input[type="checkbox"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.tooltip-text-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: justify;
+}
