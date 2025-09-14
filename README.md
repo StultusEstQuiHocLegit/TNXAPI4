@@ -81,7 +81,7 @@ For local testing you must fill in the placeholders in `config.php` with your ow
 
 ## 🔗 LINKS AND CONTACT
 landing page: www.tnxapi.com/UI/LandingPage.php
-to join the onboarding list, email to: hi@tnxapi.com
+**to join the onboarding list, email to: hi@tnxapi.com**
 
 
 
