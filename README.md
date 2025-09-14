@@ -97,7 +97,7 @@ and
 2.) have automatically recurring calls to nexus.php directly (direct code execution)
 (for example to know, who is late with their payments)
 
-- improve SUPPORT BOT
+- improve SUPPORT BOT (in general, more testing and also allow to add entries to car directly if price flag is set at least once)
 - upgrade to more powerful models again
 - improve SetupDatabases.php
 - ? add formbuilder and forms
