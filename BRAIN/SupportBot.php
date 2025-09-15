@@ -366,7 +366,7 @@ Answer the users question.$MentionSearchResults
 Respond **strictly with just a JSON object** containing:
 EOD;
 if (!empty($CompanyName)) {
-    $PromptAnswerGeneralStarting .= "\n(you are acting as the support bot for company: $company)";
+    $PromptAnswerGeneralStarting .= "\n(you are acting as the support bot for company: {$CompanyName})";
 }
 
 if ($singleTable) {
