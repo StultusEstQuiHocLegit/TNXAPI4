@@ -47,6 +47,14 @@ function extractTextFromResponse(array $response): string {
     return trim($buf);
 }
 
+function extractJsonFromCodeBlock(string $text): string {
+    $text = trim($text);
+    if (preg_match('/```(?:json)?\s*(\{[\s\S]*\})\s*```/i', $text, $m)) {
+        return $m[1];
+    }
+    return $text;
+}
+
 function truncateText(string $text, int $max): string {
     return mb_substr($text, 0, $max);
 }
@@ -421,6 +429,7 @@ if ($resp2 !== false) {
     $dec2 = json_decode($resp2, true);
     if (is_array($dec2)) {
         $tmp = extractTextFromResponse($dec2);
+        $tmp = extractJsonFromCodeBlock($tmp);
         $js = json_decode($tmp, true);
         if (is_array($js)) {
             $message = (string)($js['message'] ?? $js['answer'] ?? $tmp);
