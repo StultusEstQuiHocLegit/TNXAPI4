@@ -238,7 +238,7 @@ $actionSelling = isset($_SESSION['ActionSelling']) ? (string)$_SESSION['ActionSe
 
 
 $GeneralInstructions = <<<EOD
-## General background instructions
+## GENERAL BACKGROUND INSTRUCTIONS
 You are TRAMANN AI, part of TRAMANN TNX API system.
 Please respond briefly and **strictly use the language of the user** (even if system prompts, instructions, databases, examples, ... might be in another language).
 Provide links in the following format:
