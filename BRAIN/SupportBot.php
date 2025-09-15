@@ -335,17 +335,34 @@ $historyText = truncateText(pairsToText($history), 50000);
 $searchText = truncateText($searchText, 50000);
 
 $currentDateTime = date('Y-m-d H:i:s');
+// build company info lines for context
+$companyInfoLines = [];
+if ($CompanyName) $companyInfoLines[] = 'you are acting as the support bot for a company named: ' . $CompanyName;
+if ($address) $companyInfoLines[] = 'address: ' . $address;
+if ($connectEmail) $companyInfoLines[] = 'contact email: ' . $connectEmail;
+$companyContext = '';
+if (!empty($companyInfoLines)) {
+    $companyContext = "\n" . implode("\n", $companyInfoLines);
+}
+
+if (trim($searchText) !== '') {
+    $MentionSearchResults = " Use the search results when relevant.";
+} else {
+    $MentionSearchResults = "";
+}
 
 $PromptAnswerGeneralStarting = <<<EOD
 # You are a helpful support bot.
 
-## GENERAL BACKGROUND INSTRUCTIONS
+## GENERAL BACKGROUND INFORMATION
 You are TRAMANN AI, part of TRAMANN TNX API system.
 Please respond briefly and **strictly use the language of the user** (even if system prompts, instructions, databases, examples, ... might be in another language).
-(current date and time: $currentDateTime)
+(current date and time: $currentDateTime)$companyContext
 
 # WHAT TO DO
-Use the search results when relevant to answer the user.
+Answer the users question.$MentionSearchResults
+
+# HOW
 Respond **strictly with just a JSON object** containing:
 EOD;
 if (!empty($CompanyName)) {
@@ -367,22 +384,13 @@ Use empty array if no relevant entries.
 EOD;
 }
 
-$companyInfoLines = [];
-if ($CompanyName) $companyInfoLines[] = 'company name: ' . $CompanyName;
-if ($address) $companyInfoLines[] = 'address: ' . $address;
-if ($connectEmail) $companyInfoLines[] = 'contact email: ' . $connectEmail;
-$companyContext = implode("\n", $companyInfoLines);
-
-$userContent = <<<EOD
-USER QUESTION:
-$question
-
-CHAT HISTORY:
-$historyText
-
-SEARCH RESULTS:
-$searchText
-EOD;
+$userContent = "# USER QUESTION:\n$question\n";
+  if (trim($historyText) !== '') {
+      $userContent .= "\n# CHAT HISTORY:\n$historyText\n";
+  }
+  if (trim($searchText) !== '') {
+      $userContent .= "\n# SEARCH RESULTS:\n$searchText\n";
+  }
 
 $messages2 = [
     ['role' => 'system', 'content' => $PromptAnswer],
