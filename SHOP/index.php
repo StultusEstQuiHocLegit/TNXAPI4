@@ -1474,8 +1474,8 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     let clickedEl = null;
     results.addEventListener('mouseover', ev => {
-        const t = ev.target;
-        if(t.dataset.baseOpacity){
+        const t = ev.target.closest('[data-base-opacity]');
+        if(t){
             if(clickedEl && clickedEl !== t){
                 clickedEl.style.opacity = clickedEl.dataset.baseOpacity;
                 clickedEl = null;
@@ -1484,18 +1484,21 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     });
     results.addEventListener('mouseout', ev => {
-        const t = ev.target;
-        if(t.dataset.baseOpacity && t !== clickedEl){
-            t.style.opacity = t.dataset.baseOpacity;
+        const t = ev.target.closest('[data-base-opacity]');
+        if(t && t !== clickedEl){
+            const rt = ev.relatedTarget;
+            if(!rt || !t.contains(rt)){
+                t.style.opacity = t.dataset.baseOpacity;
+            }
         }
     });
     document.addEventListener('click', ev => {
-        const t = ev.target;
+        const t = ev.target.closest('[data-base-opacity]');
         if(clickedEl && clickedEl !== t){
             clickedEl.style.opacity = clickedEl.dataset.baseOpacity;
             clickedEl = null;
         }
-        if(results.contains(t) && t.dataset.baseOpacity){
+        if(t && results.contains(t)){
             t.style.opacity = '1';
             clickedEl = t;
         }
