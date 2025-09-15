@@ -252,7 +252,7 @@ $history = array_slice($history, 0, 10);
 $structures = getVisibleStructures($companyId, $pdo);
 $structureText = '';
 foreach ($structures as $t => $cols) {
-    $structureText .= "table: $t\nfields: " . implode(', ', $cols) . "\n\n";
+    $structureText .= "## TABLE: $t\### FIELDS: " . implode(', ', $cols) . "\n\n";
 }
 $tablesCount = count($structures);
 $singleTable = ($tablesCount === 1);
@@ -271,6 +271,9 @@ Only use the tables and fields listed below.
 
 # STRUCTURE
 $structureText
+
+# EXAMPLE OUTPUT
+{"table":"products","field":"name","terms":["laptop","gaming","16gb"]}
 EOD;
 } elseif ($singleTable) {
     $fieldsList = implode(', ', $structures[$onlyTable]);
@@ -282,7 +285,10 @@ Respond **strictly with just a JSON object**: {"field":"field_name","terms":["..
 Only use the listed fields.
 
 # STRUCTURE
-Fields: $fieldsList
+## FIELDS: $fieldsList
+
+# EXAMPLE OUTPUT
+{"field":"name","terms":["adapter","charger","usb-c"]}
 EOD;
 } else {
     $PromptSearch = <<<EOD
@@ -290,6 +296,9 @@ EOD;
 Generate about three concise search terms related to the user's question.
 
 Return them **strictly as just a JSON array of strings**.
+
+# EXAMPLE OUTPUT
+["shipping","invoice","return"]
 EOD;
 }
 
@@ -379,7 +388,7 @@ Answer the users question.$MentionSearchResults
 Respond **strictly with just a JSON object** containing:
 EOD;
 if (!empty($CompanyName)) {
-    $PromptAnswerGeneralStarting .= "\n(you are acting as the support bot for company: {$CompanyName})";
+    $PromptAnswerGeneralStarting .= "\n(you are acting as the support bot for company: $CompanyName)";
 }
 
 if ($singleTable) {
@@ -387,6 +396,9 @@ if ($singleTable) {
 {$PromptAnswerGeneralStarting}
 "message": your answer as text,
 "idpks": array of idpks sorted from most relevant to least (or an empty array).
+
+# EXAMPLE OUTPUT
+{"message":"We still have 5 of them in our inventory.","idpks":[123,456]}
 EOD;
 } else {
     $PromptAnswer = <<<EOD
@@ -394,6 +406,9 @@ EOD;
 "message": your answer as text,
 "entries": [{"table":"table_name","idpk":123}, ...] sorted from most relevant to least.
 Use empty array if no relevant entries.
+
+# EXAMPLE OUTPUT
+{"message":"You should clean the device once a week.","entries":[{"table":"products","idpk":123},{"table":"manuals","idpk":456}]}
 EOD;
 }
 
@@ -433,7 +448,6 @@ $entries = [];
 if ($resp2 !== false) {
     $dec2 = json_decode($resp2, true);
     if (is_array($dec2)) {
-        $tmp = extractTextFromResponse($dec2);
         $tmp = extractJsonFromCodeBlock($tmp);
         $js = json_decode($tmp, true);
         if (is_array($js)) {
