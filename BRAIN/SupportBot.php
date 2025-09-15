@@ -448,10 +448,11 @@ $entries = [];
 if ($resp2 !== false) {
     $dec2 = json_decode($resp2, true);
     if (is_array($dec2)) {
-        $tmp = extractJsonFromCodeBlock($tmp);
-        $js = json_decode($tmp, true);
+        $text2 = extractTextFromResponse($dec2);
+        $jsonText = extractJsonFromCodeBlock($text2);
+        $js = json_decode($jsonText, true);
         if (is_array($js)) {
-            $message = (string)($js['message'] ?? $js['answer'] ?? $tmp);
+            $message = (string)($js['message'] ?? $js['answer'] ?? $jsonText);
             if ($singleTable) {
                 $ids = $js['idpks'] ?? [];
                 if (is_array($ids)) {
@@ -475,7 +476,7 @@ if ($resp2 !== false) {
                 }
             }
         } else {
-            $message = $tmp;
+            $message = $jsonText;
         }
     }
 }
