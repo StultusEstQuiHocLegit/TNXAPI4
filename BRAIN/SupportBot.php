@@ -195,6 +195,42 @@ $question = $_POST['question'] ?? '';
 $historyJson = $_POST['history'] ?? '[]';
 $companyId = (int)($_POST['company'] ?? 0);
 
+$CompanyName = '';
+$connectEmail = '';
+$address = '';
+if ($companyId) {
+    try {
+        $stmtInfo = $pdo->prepare("SELECT CompanyName, street, HouseNumber, ZIPCode, city, country, ConnectEmail, email FROM admins WHERE idpk = ?");
+        $stmtInfo->execute([$companyId]);
+        $info = $stmtInfo->fetch(PDO::FETCH_ASSOC);
+        if ($info) {
+            $CompanyName = $info['CompanyName'] ?? '';
+            $street       = $info['street'] ?? '';
+            $houseNumber  = $info['HouseNumber'] ?? '';
+            $zipCode      = $info['ZIPCode'] ?? '';
+            $city         = $info['city'] ?? '';
+            $country      = $info['country'] ?? '';
+            $connectEmail = $info['ConnectEmail'] ?? '';
+            if ($connectEmail) {
+                $connectEmail = preg_split('/[|,\\s]+/', trim($connectEmail))[0] ?? '';
+            }
+            if (!$connectEmail) {
+                $connectEmail = $info['email'] ?? '';
+            }
+            $addrParts = [];
+            if ($street || $houseNumber) {
+                $addrParts[] = trim(($houseNumber ? $houseNumber . ' ' : '') . $street);
+            }
+            if ($city)    $addrParts[] = $city;
+            if ($zipCode) $addrParts[] = $zipCode;
+            if ($country) $addrParts[] = $country;
+            $address = implode(', ', array_filter($addrParts));
+        }
+    } catch (Exception $e) {
+        // ignore
+    }
+}
+
 $question = truncateText($question, 3000);
 $history = json_decode($historyJson, true);
 if (!is_array($history)) $history = [];
@@ -214,28 +250,33 @@ $contextPairs = array_slice($history, 0, 3);
 $ctxText = truncateText(pairsToText($contextPairs), 50000);
 if ($tablesCount > 1) {
     $PromptSearch = <<<EOD
+# You are an search assistant.
 You are given our shop database tables and their visible columns.
 Choose one table and one field to search based on the user's question and generate about three concise search terms.
-Respond strictly with a JSON object: {"table":"table_name","field":"column_name","terms":["..."]}.
+Respond **strictly with just a JSON object**: {"table":"table_name","field":"column_name","terms":["..."]}.
 Only use the tables and fields listed below.
 
+# STRUCTURE
 $structureText
 EOD;
 } elseif ($singleTable) {
     $fieldsList = implode(', ', $structures[$onlyTable]);
     $PromptSearch = <<<EOD
+# You are an search assistant.
 You are given the fields of our shop database table "$onlyTable".
 Choose the most relevant field to search and generate about three concise search terms.
-Respond strictly with a JSON object: {"field":"field_name","terms":["..."]}.
+Respond **strictly with just a JSON object**: {"field":"field_name","terms":["..."]}.
 Only use the listed fields.
 
+# STRUCTURE
 Fields: $fieldsList
 EOD;
 } else {
     $PromptSearch = <<<EOD
+# You are an search assistant.
 Generate about three concise search terms related to the user's question.
 
-Return them strictly as a JSON array of strings.
+Return them **strictly as just a JSON array of strings**.
 EOD;
 }
 
@@ -292,26 +333,60 @@ if ($table !== '' && $field !== '' && !empty($terms)) {
 // ----------------------------- second call -----------------------------------
 $historyText = truncateText(pairsToText($history), 50000);
 $searchText = truncateText($searchText, 50000);
+
+$currentDateTime = date('Y-m-d H:i:s');
+
+$PromptAnswerGeneralStarting = <<<EOD
+# You are a helpful support bot.
+
+## GENERAL BACKGROUND INSTRUCTIONS
+You are TRAMANN AI, part of TRAMANN TNX API system.
+Please respond briefly and **strictly use the language of the user** (even if system prompts, instructions, databases, examples, ... might be in another language).
+(current date and time: $currentDateTime)
+
+# WHAT TO DO
+Use the search results when relevant to answer the user.
+Respond **strictly with just a JSON object** containing:
+EOD;
+if (!empty($CompanyName)) {
+    $PromptAnswerGeneralStarting .= "\n(you are acting as the support bot for company: $company)";
+}
+
 if ($singleTable) {
     $PromptAnswer = <<<EOD
-You are a helpful support bot for our shop. Use the search results when relevant to answer the user.
-Respond strictly with a JSON object containing:
+{$PromptAnswerGeneralStarting}
 "message": your answer as text,
 "idpks": array of idpks sorted from most relevant to least (or an empty array).
 EOD;
 } else {
     $PromptAnswer = <<<EOD
-You are a helpful support bot for our shop. Use the search results when relevant to answer the user.
-Respond strictly with a JSON object containing:
+{$PromptAnswerGeneralStarting}
 "message": your answer as text,
 "entries": [{"table":"table_name","idpk":123}, ...] sorted from most relevant to least.
 Use empty array if no relevant entries.
 EOD;
 }
 
+$companyInfoLines = [];
+if ($CompanyName) $companyInfoLines[] = 'company name: ' . $CompanyName;
+if ($address) $companyInfoLines[] = 'address: ' . $address;
+if ($connectEmail) $companyInfoLines[] = 'contact email: ' . $connectEmail;
+$companyContext = implode("\n", $companyInfoLines);
+
+$userContent = <<<EOD
+USER QUESTION:
+$question
+
+CHAT HISTORY:
+$historyText
+
+SEARCH RESULTS:
+$searchText
+EOD;
+
 $messages2 = [
     ['role' => 'system', 'content' => $PromptAnswer],
-    ['role' => 'user', 'content' => "USER QUESTION:\n$question\n\nCHAT HISTORY:\n$historyText\n\nSEARCH RESULTS:\n$searchText"]
+    ['role' => 'user', 'content' => $userContent]
 ];
 $payload2 = [
     'model' => 'gpt-4.1-mini',
