@@ -47,7 +47,12 @@ function extractTextFromResponse(array $response): string {
     return trim($buf);
 }
 
-function extractJsonFromCodeBlock(string $text): string {
+function extractJsonFromCodeBlock($text): string {
+    if (is_array($text)) {
+        $text = json_encode($text);
+    } else {
+        $text = (string)$text;
+    }
     $text = trim($text);
     if (preg_match('/```(?:json)?\s*(\{[\s\S]*\})\s*```/i', $text, $m)) {
         return $m[1];
