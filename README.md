@@ -4,7 +4,6 @@
 TNXAPI2 is a PHP based API and management platform that connects databases, emails and other business data. It provides endpoints for automation as well as a simple web interface so that users can manage their accounts, workflows and documents.
 
 ## 📂 CODE STRUCTURE
-- **API/** – public endpoints such as `nexus.php` for remote access
 - **BRAIN/** – workflow engine handling the main business logic
 - **UI/** – HTML/PHP front end for user interaction
 - **SETUP/** – scripts for preparing database tables and initial configuration
